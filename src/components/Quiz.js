@@ -4,7 +4,9 @@ import QuizResult from './QuizResult';
 function Quiz() {
     const [currentQuestion,setCurrentQuestion]=useState(0);
     const [score,setScore] = useState(0);
+    const [percentage,setPercentage] = useState(0);
     const [clickedOption,setClickedOption]=useState(0);
+    const [result,setResult] = useState(0);
     const [showResult,setShowResult]=useState(false);
     
     const changeQuestion = ()=>{
@@ -18,21 +20,27 @@ function Quiz() {
     }
     const updateScore=()=>{
         if(clickedOption===QuizData[currentQuestion].answer){
-            setScore(score+1);
+           setScore(score+1);
+           setPercentage(percentage+10)
         }
     }
     const resetAll=()=>{
+        let rs = result
         setShowResult(false);
         setCurrentQuestion(0);
         setClickedOption(0);
         setScore(0);
-    }
+        setPercentage(0);
+        setResult((rs == 30)?"you are pass":"you are faild")
+
+            
+        }
   return (
     <div>
         <p className="heading-txt">Quiz APP</p>
         <div className="container">
             {showResult ? (
-                <QuizResult score={score} totalScore={QuizData.length} tryAgain={resetAll}/>
+                <QuizResult score={score} percentage={percentage} totalScore={QuizData.length} result={result} tryAgain={resetAll}/>
             ):(
             <>
             <div className="question">
